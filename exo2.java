@@ -1,13 +1,15 @@
 import java.io.*;
+
 class exo2{
 	public static void main(String [] args){
+
 		final String FILE_NAME;
 		final String WORD_TO_FIND;
 		String str;
 		int count = 0;
 		BufferedReader br;
 		File file;
-		int lastIndex = 0;
+		int lastIndex;
 
 		if ( args.length == 0 ){
 			System.out.println("set valid parameters: java exo2 [file name] [the word to find] ");
@@ -28,9 +30,10 @@ class exo2{
 			br = new BufferedReader(new FileReader(file));
 
 			do {
-				str = (br.readLine() == null) ?  "" : br.readLine();
-				System.out.println(str);
-
+				str = br.readLine();
+				str = (str == null) ?  "" : str;
+				//System.out.println(str);
+				lastIndex = 0;
 				while (lastIndex != -1){
 					lastIndex = str.indexOf(WORD_TO_FIND,lastIndex);
 
@@ -43,7 +46,7 @@ class exo2{
 			}while ( !str.equals("") && str != null);
 			br.close();
 
-			System.out.println("the file has " + count + " occurence of the word " + WORD_TO_FIND);
+			System.out.println("the file " + FILE_NAME + "has " + count + " occurence of the word " + WORD_TO_FIND);
 
 			
 			
