@@ -1,28 +1,54 @@
+import java.io.*;
 class exo2{
 	public static void main(String [] args){
 		final String FILE_NAME;
 		final String WORD_TO_FIND;
 		String str;
-		int count;
+		int count = 0;
 		BufferedReader br;
+		File file;
+		int lastIndex = 0;
 
-		if ( args.lentgh == 0 ){
+		if ( args.length == 0 ){
 			System.out.println("set valid parameters: java exo2 [file name] [the word to find] ");
 			return;
 		}
 
 		FILE_NAME = args[0];
 		WORD_TO_FIND = args[1];
+		
+		file = new File(FILE_NAME);
+
+		if(!file.exists()){
+			System.out.println("File does not exist !!");
+			return;
+		}
 		try {
 
-			if(!file.isExists()){
-				System.out.println("File does not exist !!");
-				return;
-			}
+			br = new BufferedReader(new FileReader(file));
 
-			br = new BufferedReader(new FileReader(FILE_NAME));
+			do {
+				str = (br.readLine() == null) ?  "" : br.readLine();
+				System.out.println(str);
 
-			str = br.read
+				while (lastIndex != -1){
+					lastIndex = str.indexOf(WORD_TO_FIND,lastIndex);
+
+					if(lastIndex != -1){
+						count++;
+						lastIndex += WORD_TO_FIND.length();
+					}
+				}
+
+			}while ( !str.equals("") && str != null);
+			br.close();
+
+			System.out.println("the file has " + count + " occurence of the word " + WORD_TO_FIND);
+
+			
+			
+
+			
 		}catch(IOException e){
 			System.out.println("Err : "+ e.getMessage());
 		}
