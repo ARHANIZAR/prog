@@ -44,6 +44,7 @@ class SommeServeur {
 
 				dis.close();
 				dos.close();
+				somme = 0;
 
 			}
 		} catch(IOException e){
