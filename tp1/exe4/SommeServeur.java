@@ -26,25 +26,26 @@ class SommeServeur {
 		}
 
 		try{
-			comm = conn.accept();
 
-			dis = new DataInputStream(comm.getInputStream());
-			dos = new DataOutputStream(comm.getOutputStream());
+			while (true){
+				comm = conn.accept();
 
-			nombreInt = dis.readInt();
+				dis = new DataInputStream(comm.getInputStream());
+				dos = new DataOutputStream(comm.getOutputStream());
 
-			for (int i = 0; i < nombreInt; i++){
+				nombreInt = dis.readInt();
 
-				somme = somme + dis.readInt();
+				for (int i = 0; i < nombreInt; i++){
+
+					somme = somme + dis.readInt();
+				}
+
+				dos.writeInt(somme);
+
+				dis.close();
+				dos.close();
+
 			}
-
-			dos.writeInt(somme);
-
-			dis.close();
-			dos.close();
-
-
-
 		} catch(IOException e){
 			System.out.println(e.getMessage());
 		}
