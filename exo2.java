@@ -11,7 +11,7 @@ class exo2{
 		File file;
 		int lastIndex;
 
-		if ( args.length < 2 ){
+		if ( args.length != 2 ){
 			System.out.println("set valid parameters: java exo2 [file name] [the word to find] ");
 			System.exit(1);
 		}
