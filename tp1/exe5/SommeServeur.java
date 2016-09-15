@@ -2,7 +2,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-class SommeServeur {
+class SommeServeur {
+
 	public static void main(String [] args){
 
 		ObjectInputStream ois = null;
@@ -11,15 +12,16 @@ class SommeServeur {
 		ServerSocket conn = null;
 		Socket comm = null;
 		int port;
-		List listOfInt = null;
+		List<Integer> listOfInt;
+
 		if (args.length != 1) {
-			System.ou.println("usage SommeServeur [port]");
+			System.out.println("usage SommeServeur [port]");
 			System.exit(1);
 		}
 
 		try {
 			port = Integer.parseInt(args[0]);
-			conn = ServerSocket(port);
+			conn = new ServerSocket(port);
 		} catch (IOException e){
 			System.out.println("Erreur: création socket de connection");
 		}
@@ -35,20 +37,26 @@ class SommeServeur {
 				boolean stop = false;
 
 				while(!stop){
+					listOfInt = (List<Integer>)ois.readObject();
+					System.out.println(listOfInt.size() + " nombres envoyés par le client ");
 
-					listOfInt = (List)ois.readObject();
-
-					for (int i in listOfInt){
+					for (int i : listOfInt){
 						somme += i;
 					}
-					stop = (listOfInt == true || listOfInt.size() == 0) ? true : false;
+
+					stop = (listOfInt == null || listOfInt.size() == 0) ? true : false;
 
 					oos.writeInt(somme);
+
+					System.out.println("La somme des nombres est : " + somme);
 				}
 
 				oos.close();
 				ois.close();
+				somme = 0;
 			}
+		} catch(IOException | ClassNotFoundException e){
+			System.out.println("err : " + e.getMessage());
 		}
 	}
 }
