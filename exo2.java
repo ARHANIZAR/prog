@@ -48,10 +48,6 @@ class exo2{
 
 			System.out.println("the file " + FILE_NAME + "has " + count + " occurence of the word " + WORD_TO_FIND);
 
-			
-			
-
-			
 		}catch(IOException e){
 			System.out.println("Err : "+ e.getMessage());
 		}
