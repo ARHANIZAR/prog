@@ -35,8 +35,10 @@ class SommeClient {
 
 			br = new BufferedReader(new InputStreamReader(System.in));
 			listOfInt = new ArrayList();
-			do {
-				ligne = br.readLine();
+			ligne = br.readLine();
+			while(ligne != null && !ligne.equals("")){
+				listOfInt = new ArrayList();
+				somme = 0;
 				tableOfInt = ligne.split(",");
 
 				for(String i : tableOfInt){
@@ -48,10 +50,10 @@ class SommeClient {
 
 				somme = ois.readInt();
 				System.out.println("la somme envoyée par le serveur est : " + somme);
+				ligne = br.readLine();
 
+			}
 
-
-			}while(ligne != null && !ligne.equals(""));
 
 			oos.close();
 			ois.close();

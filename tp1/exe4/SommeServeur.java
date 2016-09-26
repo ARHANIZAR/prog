@@ -25,30 +25,40 @@ class SommeServeur {
 			System.exit(1);
 		}
 
-		try{
 
-			while (true){
+
+		while (true){
+			try{
 				comm = conn.accept();
-
+				boolean stop = false;
 				dis = new DataInputStream(comm.getInputStream());
 				dos = new DataOutputStream(comm.getOutputStream());
 
-				nombreInt = dis.readInt();
+				while(!stop){
 
-				for (int i = 0; i < nombreInt; i++){
 
-					somme = somme + dis.readInt();
+					nombreInt = dis.readInt();
+
+					stop = nombreInt == 0 ? true : false;
+
+					for (int i = 0; i < nombreInt; i++){
+						somme = somme + dis.readInt();
+					}
+					System.out.println("Somme envoyée : " + somme);
+
+					dos.writeInt(somme);
 				}
 
-				dos.writeInt(somme);
+
 
 				dis.close();
 				dos.close();
 				somme = 0;
+				nombreInt = 0;
 
+			}catch(IOException e){
+					System.out.println(e.getMessage());
 			}
-		} catch(IOException e){
-			System.out.println(e.getMessage());
 		}
 	}
 }

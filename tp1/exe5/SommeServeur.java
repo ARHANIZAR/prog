@@ -12,7 +12,7 @@ class SommeServeur {
 		ServerSocket conn = null;
 		Socket comm = null;
 		int port;
-		List<Integer> listOfInt;
+		List<Integer> listOfInt = new ArrayList<Integer>();
 
 		if (args.length != 1) {
 			System.out.println("usage SommeServeur [port]");
@@ -26,10 +26,10 @@ class SommeServeur {
 			System.out.println("Erreur: création socket de connection");
 		}
 
-		try {
+		
 
 			while(true){
-
+				try {
 				comm = conn.accept();
 
 				ois = new ObjectInputStream(comm.getInputStream());
@@ -37,6 +37,8 @@ class SommeServeur {
 				boolean stop = false;
 
 				while(!stop){
+					listOfInt.removeAll(listOfInt);
+					somme = 0;
 					listOfInt = (List<Integer>)ois.readObject();
 					System.out.println(listOfInt.size() + " nombres envoyés par le client ");
 
@@ -47,16 +49,19 @@ class SommeServeur {
 					stop = (listOfInt == null || listOfInt.size() == 0) ? true : false;
 
 					oos.writeInt(somme);
+					oos.flush();
 
 					System.out.println("La somme des nombres est : " + somme);
 				}
 
 				oos.close();
 				ois.close();
-				somme = 0;
+				
+				System.out.println("bye bye !!");
+			
+			} catch(IOException | ClassNotFoundException e){
+				System.out.println("err : " + e.getMessage());
 			}
-		} catch(IOException | ClassNotFoundException e){
-			System.out.println("err : " + e.getMessage());
 		}
 	}
 }
