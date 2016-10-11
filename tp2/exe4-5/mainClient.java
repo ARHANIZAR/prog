@@ -24,7 +24,7 @@ public class mainClient{
 		try{
 			System.out.println("insérez le nombre de forme à traiter : ");
 			br = new BufferedReader(new InputStreamReader(System.in));
-			listOfForm = new ArrayList<Object>();
+			listOfForm = new ArrayList<Form>();
 			nbForm = Integer.parseInt(br.readLine());
 
 			for (int i = 0; i < nbForm; i++){

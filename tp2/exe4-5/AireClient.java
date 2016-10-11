@@ -20,17 +20,9 @@ public class AireClient{
 	public void requestLoop()throws IOException{
 		try{
 
-
-			for (Object o : listOfForm){
-				if ( o instanceof Rond ){
-					oos.writeInt(1);
-				} else{
-					oos.writeInt(2);
-				}
-
-				oos.writeObject(o);
-				oos.flush();
-			}
+			oos.writeObject(listOfForm);
+			oos.flush();
+			
 
 			for (Object o : listOfForm){
 				double aire = ois.readDouble();

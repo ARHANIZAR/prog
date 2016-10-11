@@ -1,10 +1,11 @@
 import java.io.*;
  
-public class Rond implements Serializable {
+public class Rond extends Form implements Serializable {
  
     private double rayon;
  
     public Rond(double rayon) {
+        super();
         this.rayon = rayon;
     }
  

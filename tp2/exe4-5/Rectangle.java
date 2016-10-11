@@ -1,11 +1,12 @@
 import java.io.*;
  
-public class Rectangle implements Serializable {
+public class Rectangle extends Form implements Serializable {
  
     private double longueur;
     private double largeur;
  
     public Rectangle(double largeur, double longueur) {
+        super();
         this.largeur = largeur;
         this.longueur = longueur;
     }
