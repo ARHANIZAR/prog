@@ -7,6 +7,8 @@ public class AireServer {
 	ServerSocket conn;
 	Socket comm;
 	int port;
+	int idReq;
+	int countForm;
 
 	public AireServer(int port)throws IOException{
 		this.port = port;
@@ -29,13 +31,20 @@ public class AireServer {
 	}
 
 	public void requestLoop()throws IOException, ClassNotFoundException{
-		int idReq = ois.readInt();
 
-		if( idReq == 1 ){
-			processRond();
-		}else if( idReq == 2 ){
-			processRectangle();
-		} 
+		countForm = ois.readInt();
+
+		for (int i = 0; i < countForm ; i++ ) {
+			idReq = ois.readInt();
+			if( idReq == 1 ){
+				processRond();
+			}else if( idReq == 2 ){
+				processRectangle();
+			} 
+
+		}
+
+
 	}
 
 	public void processRond()throws IOException, ClassNotFoundException{

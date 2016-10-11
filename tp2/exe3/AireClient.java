@@ -1,46 +1,45 @@
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 public class AireClient{
 	Socket comm;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 	Rectangle rectangle;
-	Rond rond;
+	List listOfForm;
 
-	public AireClient(String serverAdress, int port, double rayon)throws IOException{
-		rond = new Rond(rayon);
+	public AireClient(String serverAdress, int port, List listOfForm)throws IOException{
+		this.listOfForm = listOfForm;
 		comm = new Socket(serverAdress,port);
 		oos = new ObjectOutputStream(comm.getOutputStream());
 		ois = new ObjectInputStream(comm.getInputStream());
 	}
 
-	public AireClient(String serverAdress, int port, double largeur, double longeur)throws IOException{
-		rectangle = new Rectangle(largeur,longeur);
-		comm = new Socket(serverAdress,port);
-		oos = new ObjectOutputStream(comm.getOutputStream());
-		ois = new ObjectInputStream(comm.getInputStream());
-
-	}
 
 	public void requestLoop()throws IOException{
 		try{
 
-			if( rond != null ){
-				oos.writeInt(1);
-				oos.writeObject(rond);
-			}
-			else if( rectangle != null ){
-				oos.writeInt(2);
-				oos.writeObject(rectangle);
-			}else {
-				oos.writeInt(0);
+			oos.writeInt(listOfForm.size());
+
+			for (Object o : listOfForm){
+				if ( o instanceof Rond ){
+					oos.writeInt(1);
+				} else{
+					oos.writeInt(2);
+				}
+
+				oos.writeObject(o);
+				oos.flush();
 			}
 
-			double aire = ois.readDouble();
-			double perimetre = ois.readDouble();
+			for (Object o : listOfForm){
+				double aire = ois.readDouble();
+				double perimetre = ois.readDouble();
 
-			System.out.println(" aire : " + aire + " / perimetre : " + perimetre);
+				System.out.println(" aire : " + aire + " / perimetre : " + perimetre);
+			}
+
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
